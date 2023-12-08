@@ -11,6 +11,11 @@ public class InitController {
 
         return "index";
     }
+    @GetMapping("/home")
+    private String home() {
+
+        return "index";
+    }
 
     @GetMapping("/login")
     private String login() {
