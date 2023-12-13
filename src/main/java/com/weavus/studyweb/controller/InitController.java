@@ -17,7 +17,7 @@ public class InitController {
         return "index";
     }
 
-    @GetMapping("/login")
+    @GetMapping("/loginForm")
     private String login() {
 
         return "login";

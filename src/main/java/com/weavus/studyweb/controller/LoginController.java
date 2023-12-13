@@ -14,17 +14,17 @@ public class LoginController {
     @Autowired
     private MemberRepo memberRepo;
 
-    @PostMapping("/login")
-    private String login(MemberDto dto, Model model) {
-
-        Member member = memberRepo.findByIdAndPassword(dto.getId(), dto.getPassword());
-
-
-        if(member != null) {
-            return "redirect:/" + "home";
-        } else {
-            model.addAttribute("msg", "아이디 또는 패스워드를 확인해주세요");
-            return "login";
-        }
-    }
+//    @PostMapping("/login")
+//    private String login(MemberDto dto, Model model) {
+//
+//        Member member = memberRepo.findByIdAndPassword(dto.getId(), dto.getPassword());
+//
+//
+//        if(member != null) {
+//            return "redirect:/" + "home";
+//        } else {
+//            model.addAttribute("msg", "아이디 또는 패스워드를 확인해주세요");
+//            return "login";
+//        }
+//    }
 }

@@ -1,27 +1,30 @@
 package com.weavus.studyweb.controller;
 
-import com.weavus.studyweb.dto.MemberDto;
-import com.weavus.studyweb.entity.Member;
-import com.weavus.studyweb.repository.MemberRepo;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.weavus.studyweb.entity.User;
+import com.weavus.studyweb.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequiredArgsConstructor
 public class MemberRegController {
 
-    @Autowired
-    private MemberRepo memberRepo;
+
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final UserRepository userRepository;
 
     @PostMapping("/reg")
-    private String reg(MemberDto dto, Model model) {
+    private String reg(User user) {
 
-        Member member = Member.builder().id(dto.getId()).name(dto.getName()).password(dto.getPassword()).build();
-        model.addAttribute("msg", "회원가입이 완료 되었습니다");
-        memberRepo.save(member);
+        user.setRole("USER");
 
-        return "redirect:/login";
+        String encPw = bCryptPasswordEncoder.encode(user.getPassword());
+        user.setPassword(encPw);
+
+        userRepository.save(user);
+        return "redirect:/loginForm";
+
     }
 }
