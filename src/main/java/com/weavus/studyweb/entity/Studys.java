@@ -1,8 +1,10 @@
 package com.weavus.studyweb.entity;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,8 +23,11 @@ public class Studys {
     private String category;
     private String studyDetail;
     private String writerName;
-    private Timestamp startDate;
-    private Timestamp endDate;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date startDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date endDate;
 
     @CreationTimestamp
     private Timestamp createDate;

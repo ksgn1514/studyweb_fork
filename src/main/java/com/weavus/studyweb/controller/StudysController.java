@@ -34,6 +34,7 @@ public class StudysController {
     @PostMapping("create")
     public String createStudy(Studys study) {
         
+        System.out.println(study);
         if(study == null){
             return "redirect:/";
         }
@@ -43,8 +44,8 @@ public class StudysController {
     }
     
 
-    @GetMapping("detail/{id}")
-    private String studydetail() {
+    @GetMapping("detail")// studys/detail?id=
+    private String studydetail(Long id) {
 
         return "studydetail";
     }

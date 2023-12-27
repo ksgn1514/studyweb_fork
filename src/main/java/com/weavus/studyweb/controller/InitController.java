@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class InitController {
 
-    @GetMapping("")
+    @GetMapping("/")
     private String init(@AuthenticationPrincipal PrincipalDetails principalDetails, HttpServletRequest request) {
         if(principalDetails != null) {
             System.out.println(principalDetails.getUsername()) ; 
