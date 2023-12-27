@@ -16,9 +16,9 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private String username;
-    private String password;
     private String userid;
+    private String password;
+    private String username;
     private String role;
 
     @CreationTimestamp
