@@ -11,8 +11,9 @@
   <section class="py-4 py-xl-5" style="margin-bottom: -49px">
     <div class="container">
       <div class="text-center p-4 p-lg-5">
-        <p class="fw-bold text-primary mb-2">{카테고리}</p>
-        <h1 class="fw-bold mb-4">{스터디명} <br />(스터디상세화면)</h1>
+        <p class="fw-bold text-primary mb-2" th:text="${study.category}">{카테고리}</p>
+        <h1 class="fw-bold mb-4" th:text="${study.studyName}">{스터디명} </h1>
+        <p th:utext="${study.studyDetail}" > (스터디상세화면)</p>
       </div>
     </div>
   </section>

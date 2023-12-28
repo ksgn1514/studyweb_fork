@@ -17,12 +17,13 @@ import lombok.Data;
 public class Studys {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String studyName;
     private String category;
     private String studyDetail;
-    private String writerName;
+    private String writerUserid;
+    private String filepath;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date startDate;
