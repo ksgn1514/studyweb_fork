@@ -3,6 +3,7 @@ package com.weavus.studyweb.entity;
 import java.sql.Timestamp;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,13 +16,17 @@ import lombok.Data;
 public class Studys {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String studyName;
     private String category;
     private String studyDetail;
-    private String writerName;
+    private String writerUserid;
+    private String filepath;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Timestamp startDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Timestamp endDate;
 
     @CreationTimestamp

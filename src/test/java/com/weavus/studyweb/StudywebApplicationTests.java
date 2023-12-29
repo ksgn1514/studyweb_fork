@@ -35,7 +35,7 @@ class StudywebApplicationTests {
         study.setStudyName("test1");
         study.setStudyDetail("testestest");
         study.setCategory("study");
-        study.setWriterName("tester");
+        study.setWriterUserid("123123");
         study.setStartDate(start);
 
         studys.createStudy(study);

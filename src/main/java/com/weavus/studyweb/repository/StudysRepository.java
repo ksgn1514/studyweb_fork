@@ -10,7 +10,6 @@ import java.sql.Timestamp;
 
 @Repository
 public interface StudysRepository extends JpaRepository<Studys, Long>  {
-    Studys findByid(int id);
 
     //募集中のリスト取得のため
     List<Studys> findByStartDateGreaterThanEqual(Timestamp startDate);

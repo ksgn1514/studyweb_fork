@@ -2,7 +2,7 @@
 <html data-bs-theme="light" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{common :: meta_header('create study',~{::link},~{::script})}">
-    
+
 </head>
 
 <body>
@@ -15,23 +15,23 @@
           <div class="card mb-5">
             <div class="card-body p-sm-5">
               <h2 class="text-center mb-4">스터디 등록</h2>
-              <form method="post">
+              <form action="/studys/create" method="post" enctype="multipart/form-data">
                 <div>
                   <label class="form-label">카테고리</label>
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="formCheck-1" /><label class="form-check-label"
-                      for="formCheck-1">교육용</label>
+                    <input class="form-check-input" type="checkbox" value="교육용" name="category" id="formCheck-1" /><label
+                      class="form-check-label" for="formCheck-1">교육용</label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="formCheck-3" /><label class="form-check-label"
+                    <input class="form-check-input" type="checkbox" value="사이드프로젝트" name="category" id="formCheck-3" /><label class="form-check-label"
                       for="formCheck-3">사이드프로젝트</label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="formCheck-2" /><label class="form-check-label"
+                    <input class="form-check-input" type="checkbox" value="자격증" name="category" id="formCheck-2" /><label class="form-check-label"
                       for="formCheck-2">자격증</label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="formCheck-4" /><label class="form-check-label"
+                    <input class="form-check-input" type="checkbox" value="기타" name="category" id="formCheck-4" /><label class="form-check-label"
                       for="formCheck-4">기타</label>
                   </div>
                 </div>
@@ -40,7 +40,7 @@
                         padding-top: 0px;
                         margin-top: 8px;
                         margin-bottom: 8px;
-                      ">스터디 이름</label><input class="form-control" type="text" id="name-2" name="name"
+                      ">스터디 이름</label><input class="form-control" type="text" id="name-2" name="studyName"
                     placeholder="스터디명" />
                 </div>
                 <div class="mb-3">
@@ -48,20 +48,20 @@
                     placeholder="Email" type="date" />
                 </div>
                 <div class="mb-3" style="margin-bottom: 16px">
-                  <label class="form-label">스터디 종료일</label><input class="form-control" id="email-1" name="startDate"
+                  <label class="form-label">스터디 종료일</label><input class="form-control" id="email-1" name="endDate"
                     placeholder="Email" type="date" style="margin-bottom: 0px" />
                 </div>
                 <div class="mb-3">
-                  <label class="form-label">스터디 상세설명</label><textarea class="form-control" id="message-2" name="detail"
+                  <label class="form-label">스터디 상세설명</label><textarea class="form-control" id="message-2" name="studyDetail"
                     rows="6" placeholder="상세설명(학습목표, 계획, 인원등)"></textarea>
                 </div>
                 <div style="padding-bottom: 0px; margin-bottom: 15px">
-                  <label class="form-label">대표이미지</label><input class="form-control" type="file" />
+                  <label class="form-label">대표이미지</label><input class="form-control" type="file" name="file"/>
                 </div>
                 <div>
-                  <button class="btn btn-primary d-block w-100" type="submit">
-                    등록
-                  </button>
+                    <button class="btn btn-primary d-block w-100" type="submit">
+                      등록
+                    </button>
                 </div>
               </form>
             </div>
@@ -72,6 +72,21 @@
   </section>
 
   <div th:replace="~{common :: footer}"></div>
+
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script>
+
+    $(function () {
+      $('.form-check-input').on('click', function () {
+        if ($(this).prop('checked')) {
+          // 一旦全てをクリアして再チェックする
+          $('.form-check-input').prop('checked', false);
+          $(this).prop('checked', true);
+        }
+      });
+    });
+  </script>
 </body>
 
 </html>

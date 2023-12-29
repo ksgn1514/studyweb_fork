@@ -9,10 +9,10 @@ import java.util.Collection;
 
 public class PrincipalDetails implements UserDetails {
 
-    private User user;
+    private User loginUser;
 
     public PrincipalDetails(User user) {
-        this.user = user;
+        this.loginUser = user;
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -20,7 +20,7 @@ public class PrincipalDetails implements UserDetails {
         GrantedAuthority grant = new GrantedAuthority() {
             @Override
             public String getAuthority() {
-                return user.getRole();
+                return loginUser.getRole();
             }
         };
 
@@ -29,16 +29,16 @@ public class PrincipalDetails implements UserDetails {
         return collection;
     }
     public User getUser(){
-        return user;
+        return loginUser;
     }
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return loginUser.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return loginUser.getUsername();
     }
 
     @Override

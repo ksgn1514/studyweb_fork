@@ -3,6 +3,7 @@ package com.weavus.studyweb.service;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,4 +34,10 @@ public class StudysService {
 
         return studysRepository.findByStartDateGreaterThanEqual(now);
     }
+
+    public Studys findById(Long id) {
+        return studysRepository.findById(id).get();
+    }
+
+    
 }
