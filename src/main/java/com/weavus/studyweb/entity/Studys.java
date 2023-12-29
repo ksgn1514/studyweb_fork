@@ -1,7 +1,6 @@
 package com.weavus.studyweb.entity;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -26,9 +25,9 @@ public class Studys {
     private String filepath;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date startDate;
+    private Timestamp startDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date endDate;
+    private Timestamp endDate;
 
     @CreationTimestamp
     private Timestamp createDate;

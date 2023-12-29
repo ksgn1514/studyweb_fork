@@ -16,14 +16,19 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.weavus.studyweb.auth.PrincipalDetails;
 import com.weavus.studyweb.dto.StudysDTO;
+import com.weavus.studyweb.entity.StudyApplication;
 import com.weavus.studyweb.entity.Studys;
 import com.weavus.studyweb.entity.User;
+import com.weavus.studyweb.service.StudyApplicationService;
 import com.weavus.studyweb.service.StudysService;
 import com.weavus.studyweb.utility.CommonUtility;
+import com.weavus.studyweb.utility.StudysDetail;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
 
 @Controller
 @RequestMapping("/studys")
@@ -32,15 +37,17 @@ public class StudysController {
     @Autowired
     private StudysService studysService;
     @Autowired
+    private StudyApplicationService studyApplicationService;
+    @Autowired
     private CommonUtility util;
 
     @GetMapping("")
     private String studys(Model model){
         // Studysのリストの取得
         List<Studys> studysList = studysService.findAll();
-        studysList.forEach(studys -> studys.setStudyDetail(util.nl2br(studys.getStudyDetail())));
-        
-        model.addAttribute("studysList", studysList);
+        List<StudysDetail> studysDetails = util.toDetailList(studysList);
+
+        model.addAttribute("studysList", studysDetails);
         
         return "studys";
     }
@@ -50,10 +57,9 @@ public class StudysController {
     private String studysContinue(Model model){
         // Studysのリストの取得
         List<Studys> studysList = studysService.findAll();
-        studysList.forEach(studys -> studys.setStudyDetail(util.nl2br(studys.getStudyDetail())));
-        
-        
-        model.addAttribute("studysList", studysList);
+        List<StudysDetail> studysDetails = util.toDetailList(studysList);
+
+        model.addAttribute("studysList", studysDetails);
         return "studys";
     }
 
@@ -76,8 +82,8 @@ public class StudysController {
         studys.setStudyName(studysDto.getStudyName());
         studys.setCategory(studysDto.getCategory());
         studys.setStudyDetail(studysDto.getStudyDetail());
-        studys.setStartDate(studysDto.getStartDate());
-        studys.setEndDate(studysDto.getEndDate());
+        studys.setStartDate(studysDto.getTsStartDate());
+        studys.setEndDate(studysDto.getTsEndDate());
         studys.setWriterUserid(loginUser.getUserid());
 
         System.out.println(file.getOriginalFilename());
@@ -95,22 +101,50 @@ public class StudysController {
             studys.setFilepath("/assets/img/study/" + fileName);
         }
 
-        
-        studysService.createStudy(studys);
+        //@TODO 실패시 처리 성공시 입력값반환. 
+        Studys result = studysService.createStudy(studys);
+        System.out.println(result);
         
         return "redirect:/studys";
     }
     
 
     @GetMapping("detail")// studys/detail?id=
-    private String studydetail(Model model, Long id) {
+    private String studydetail(Model model, @RequestParam("id") Long id) {
 
         StudysDTO study = StudysDTO.toStudysDTO(studysService.findById(id));
         study.setStudyDetail(util.nl2br(study.getStudyDetail()));
-        
+
+        System.out.println(study);
+
         model.addAttribute("study", study);
+
+        List<StudyApplication> applications = studyApplicationService.findByStudy(studysService.findById(id));
+        int applicantCount = applications.size();
+        
+        model.addAttribute("applications", applications);
+        model.addAttribute("applicantCount", applicantCount);
 
         return "studydetail";
     }
+
+    @PostMapping("apply")// studys/apply
+    public String applyStudy(@RequestParam("id") Long studyId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        User loginUser = principalDetails.getUser();
+
+        Studys study = new Studys();
+        study = studysService.findById(studyId);
+
+        StudyApplication studyApplication = new StudyApplication();
+        studyApplication.setStudy(study);
+        studyApplication.setUser(loginUser);
+
+        studyApplicationService.addStudyApplication(studyApplication);
+        
+        return "redirect:/studys";
+    }
+    
 
 }

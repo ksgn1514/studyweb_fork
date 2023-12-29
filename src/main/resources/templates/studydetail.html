@@ -2,58 +2,52 @@
 <html data-bs-theme="light" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{common :: meta_header('detail',~{::link},~{::script})}">
-    
+
 </head>
 
 <body>
-    <div th:replace="~{common :: navbar}"></div>
+  <div th:replace="~{common :: navbar}"></div>
 
   <section class="py-4 py-xl-5" style="margin-bottom: -49px">
     <div class="container">
       <div class="text-center p-4 p-lg-5">
-        <p class="fw-bold text-primary mb-2" th:text="${study.category}">{카테고리}</p>
-        <h1 class="fw-bold mb-4" th:text="${study.studyName}">{스터디명} </h1>
-        <p th:utext="${study.studyDetail}" > (스터디상세화면)</p>
+        <p class="fw-bold text-primary mb-2 fs-2" th:text="${study.status}">{status}</p>
+        <h1 class="fw-bold mb-4" th:text="${study.studyName}">{스터디명}</h1>
       </div>
     </div>
   </section>
   <section class="text-white py-4 py-xl-5">
     <div class="container">
-      <div class="border rounded border-0 d-flex flex-column justify-content-center align-items-center p-4 py-5" style="
-            background: linear-gradient(
-                rgba(0, 123, 255, 0.2),
-                rgba(0, 123, 255, 0.2)
-              ),
-              url('assets/img/study/study1.jpg') center / cover;
-            height: 500px;
-          ">
+      <div
+        th:style="'background: linear-gradient(rgba(0, 123, 255, 0.2), rgba(0, 123, 255, 0.2)), url(' + ${study.filepath} + ') center / cover; height: 500px;'"
+        class="border rounded border-0 d-flex flex-column justify-content-center align-items-center p-4 py-5">
         <div class="row">
           <div
-            class="col-md-10 col-lg-6 col-xl-8 text-center d-flex d-sm-flex d-md-flex justify-content-center align-items-center justify-content-md-start align-items-md-center justify-content-xl-center">
+            class="col-md-10 col-lg-8 col-xl-8 text-center d-flex d-sm-flex d-md-flex justify-content-center align-items-center justify-content-md-start align-items-md-center justify-content-xl-center">
             <div class="text-start">
-              <h1 class="text-uppercase fw-bold mb-3">
-                <br /><strong>{스터디명}</strong><br /><br />
+              <h1 class="text-uppercase fw-bold mb-3 text-break" th:text="${study.studyName}">
+                <br /><strong>{스터디명test}</strong><br /><br />
               </h1>
-              <p class="mb-4">
-                &nbsp; {스터디 상세설명}&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                &nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                &nbsp; &nbsp; &nbsp;
+              <p class="mb-4" th:utext="${study.studyDetail} + '&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+              '">
+                {스터디 상세설명}
               </p>
-              <button class="btn btn-primary fs-5 me-2 py-2 px-4" type="button">
-                신청하기
-              </button>
+              <form th:action="@{/studys/apply}" method="post" onsubmit="return confirm('이 스터디에 신청하시겠습니까?');">
+                <input type="hidden" th:name="id" th:value="${study.id}" />
+                <button class="btn btn-primary fs-5 me-2 py-2 px-4" type="submit"> 신청하기 </button>
+              </form>
             </div>
           </div>
         </div>
@@ -78,7 +72,7 @@
               </svg>
             </div>
             <h4 class="card-title">카테고리</h4>
-            <p class="card-text">{카테고리}</p>
+            <p class="card-text" th:text="${study.category}">{카테고리}</p>
           </div>
         </div>
       </div>
@@ -95,7 +89,7 @@
               </svg>
             </div>
             <h4 class="card-title">스터디 개시일</h4>
-            <p class="card-text">{스터디 개시일}<br /><br /></p>
+            <p class="card-text" th:text="${study.startDate}">{스터디 개시일}<br /><br /></p>
           </div>
         </div>
       </div>
@@ -112,7 +106,7 @@
               </svg>
             </div>
             <h4 class="card-title">스터디 종료일</h4>
-            <p class="card-text">{스터디 종료일}<br /><br /></p>
+            <p class="card-text" th:text="${study.endDate}">{스터디 종료일}<br /><br /></p>
           </div>
         </div>
       </div>

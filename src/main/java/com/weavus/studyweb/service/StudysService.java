@@ -38,4 +38,6 @@ public class StudysService {
     public Studys findById(Long id) {
         return studysRepository.findById(id).get();
     }
+
+    
 }

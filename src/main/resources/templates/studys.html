@@ -40,21 +40,22 @@
   <section>
     <div class="container py-4 py-xl-5">
       <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
-        <div th:each="studys : ${studysList}" class="col">
+        <div th:each="studysdetail : ${studysList}" class="col">
           <div>
-            <th:block th:if="${studys.filepath == null}">
+            <th:block th:if="${studysdetail.studys.filepath == null}">
               <img class="rounded img-fluid d-block w-100 fit-cover" style="height: 200px; object-fit: contain;"
                 src="assets/svg/logo.svg" />
             </th:block>
-            <th:block th:if="${studys.filepath != null}">
+            <th:block th:if="${studysdetail.studys.filepath != null}">
               <img class="rounded img-fluid d-block w-100 fit-cover" style="height: 200px"
-              th:src="@{${studys.filepath}}" />
+              th:src="@{${studysdetail.studys.filepath}}" />
             </th:block>
             
             <div class="py-4">
-              <h4 th:text="${studys.studyName}">스터디 이름</h4>
-              <p th:utext="${studys.studyDetail}">상세설명</p>
-              <a class="btn btn-primary" role="button" th:href="@{/studys/detail(id=${studys.id})}">자세히</a>
+              <p th:utext="${studysdetail.applicantCount}+'人'">申請者数</p>
+              <h4 th:text="${studysdetail.studys.studyName}">스터디 이름</h4>
+              <p th:utext="${studysdetail.studys.studyDetail}">상세설명</p>
+              <a class="btn btn-primary" role="button" th:href="@{/studys/detail(id=${studysdetail.studys.id})}">자세히</a>
             </div>
           </div>
         </div>

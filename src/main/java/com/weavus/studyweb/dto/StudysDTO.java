@@ -32,7 +32,7 @@ public class StudysDTO {
     private String status;
 
 
-    public Timestamp getStartDate() {
+    public Timestamp getTsStartDate() {
         try {
             Date date = new SimpleDateFormat("yyyy-MM-dd").parse(this.startDate);
             return new java.sql.Timestamp(date.getTime());
@@ -41,7 +41,7 @@ public class StudysDTO {
         }
     }
 
-    public Timestamp getEndDate() {
+    public Timestamp getTsEndDate() {
         try {
             Date date = new SimpleDateFormat("yyyy-MM-dd").parse(this.endDate);
             return new Timestamp(date.getTime());
@@ -52,8 +52,8 @@ public class StudysDTO {
 
     public void setStatus(){
         Timestamp now = new Timestamp(System.currentTimeMillis());
-        Timestamp dstartDate = this.getStartDate();
-        Timestamp dendDate = this.getEndDate();
+        Timestamp dstartDate = this.getTsStartDate();
+        Timestamp dendDate = this.getTsEndDate();
 
         if(dstartDate.getTime() > now.getTime()){
             this.status = "모집중";
@@ -76,10 +76,11 @@ public class StudysDTO {
         studyDTO.setFilepath(studys.getFilepath());
         studyDTO.setStudyDetail(studys.getStudyDetail());
         
-        Date start = studys.getStartDate();
-        Date end = studys.getEndDate();
-        studyDTO.setStartDate(dateFormat.format(start));
-        studyDTO.setEndDate(dateFormat.format(end));
+        String start = dateFormat.format(studys.getStartDate());
+        String end = dateFormat.format(studys.getEndDate());
+
+        studyDTO.setStartDate(start);
+        studyDTO.setEndDate(end);
 
         studyDTO.setStatus();
 
