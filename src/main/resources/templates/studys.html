@@ -3,6 +3,7 @@
 
 <head th:replace="~{common :: meta_header('studys',~{::link},~{::script})}">
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -28,17 +29,18 @@
               &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
               &nbsp; &nbsp;
             </p>
-            <button class="btn btn-primary btn-sm fs-5 py-2 px-4" style="margin-right: 5px;" type="button">
-              전체</button><button class="btn btn-primary btn-sm fs-5 py-2 px-4" type="button">
-              모집중
-            </button>
+            <button class="btn btn-primary btn-sm fs-5 py-2 px-4" style="margin-right: 5px;" type="button"
+              onclick="filterStudys('all')">전체</button>
+
+            <button class="btn btn-primary btn-sm fs-5 py-2 px-4" type="button"
+              onclick="filterStudys('recruiting')">모집중</button>
           </div>
         </div>
       </div>
     </div>
   </section>
   <section>
-    <div class="container py-4 py-xl-5">
+    <div class="container py-4 py-xl-5" th:fragment="studys-list" id="studysListContainer">
       <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
         <div th:each="studysdetail : ${studysList}" class="col">
           <div>
@@ -48,11 +50,21 @@
             </th:block>
             <th:block th:if="${studysdetail.studys.filepath != null}">
               <img class="rounded img-fluid d-block w-100 fit-cover" style="height: 200px"
-              th:src="@{${studysdetail.studys.filepath}}" />
+                th:src="@{${studysdetail.studys.filepath}}" />
             </th:block>
-            
+
             <div class="py-4">
-              <p th:utext="${studysdetail.applicantCount}+'人'">申請者数</p>
+              <div class="d-flex align-items-center">
+                <!-- 상태에 따른 뱃지 색상 변경 -->
+                <span class="badge" th:classappend="${studysdetail.studys.status == '모집중' ? 'bg-success' : 
+                                   (studysdetail.studys.status == '진행중' ? 'bg-light text-dark' : 
+                                   (studysdetail.studys.status == '완료' ? 'bg-secondary' : 'bg-primary'))}"
+                  th:text="${studysdetail.studys.status == '모집중' ? '모집중 '+studysdetail.calculateDday() : studysdetail.studys.status}">상태</span>
+
+                <!-- 신청자 수에 대한 뱃지 -->
+                <span class="badge bg-primary me-2" th:text="${studysdetail.applicantCount} + '명 참가'">신청자수</span>
+
+              </div>
               <h4 th:text="${studysdetail.studys.studyName}">스터디 이름</h4>
               <p th:utext="${studysdetail.studys.studyDetail}">상세설명</p>
               <a class="btn btn-primary" role="button" th:href="@{/studys/detail(id=${studysdetail.studys.id})}">자세히</a>
@@ -83,8 +95,25 @@
     </div>
   </section>
 
-
   <div th:replace="~{common :: footer}"></div>
+
+  <script>
+    function filterStudys(status) {
+      // AJAX 요청을 통해 서버에 필터링 요청을 보냅니다.
+      $.ajax({
+        url: '/studys/filter',
+        type: 'GET',
+        data: {
+          status: status
+        },
+        success: function (response) {
+          // 서버로부터 필터링된 결과를 받아서 페이지에 업데이트합니다.
+          // 예를 들어, studysList를 갱신하는 코드가 들어갈 수 있습니다.
+          $('#studysListContainer').html(response);
+        }
+      });
+    }
+  </script>
 </body>
 
 </html>

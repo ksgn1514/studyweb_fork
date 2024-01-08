@@ -2,6 +2,7 @@ package com.weavus.studyweb.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,13 +17,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.weavus.studyweb.auth.PrincipalDetails;
 import com.weavus.studyweb.dto.StudysDTO;
+import com.weavus.studyweb.dto.StudysDetail;
 import com.weavus.studyweb.entity.StudyApplication;
 import com.weavus.studyweb.entity.Studys;
 import com.weavus.studyweb.entity.User;
 import com.weavus.studyweb.service.StudyApplicationService;
 import com.weavus.studyweb.service.StudysService;
 import com.weavus.studyweb.utility.CommonUtility;
-import com.weavus.studyweb.utility.StudysDetail;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,26 +43,42 @@ public class StudysController {
     private CommonUtility util;
 
     @GetMapping("")
-    private String studys(Model model){
-        // Studysのリストの取得
-        List<Studys> studysList = studysService.findAll();
-        List<StudysDetail> studysDetails = util.toDetailList(studysList);
+    private String studyAll(Model model){
+        // Studys 전체 리스트 취득
+        List<StudysDetail> studysDetails = util.getStudyListAll();
 
         model.addAttribute("studysList", studysDetails);
         
         return "studys";
     }
     
-    //continueクエリパラメータに対応
+    //continue파라미터가 있을 경우 스터디 계속하기 페이지로 이동
     @GetMapping(params = "continue")
     private String studysContinue(Model model){
-        // Studysのリストの取得
-        List<Studys> studysList = studysService.findAll();
-        List<StudysDetail> studysDetails = util.toDetailList(studysList);
+        // Studys 전체 리스트 취득
+        List<StudysDetail> studysDetails = util.getStudyListAll();
 
         model.addAttribute("studysList", studysDetails);
         return "studys";
     }
+
+    //스터디 필터링
+    @GetMapping("filter")
+    public String filterStudys(@RequestParam String status, Model model) {
+        List<StudysDetail> studysDetails = new ArrayList<>();
+
+        // "모집중" 스터디 목록 취득
+        if ("recruiting".equals(status)){
+            studysDetails = util.getStudyListRecruiting();
+        } else {
+            // "전체" 또는 유효하지 않은 status 값에 대해서는 전체 목록 반환
+            studysDetails = util.getStudyListAll();
+        }
+
+        model.addAttribute("studysList", studysDetails);
+        return "studys :: studys-list";
+    }
+    
 
     //스터디 등록 페이지 이동
     @GetMapping("enroll")
