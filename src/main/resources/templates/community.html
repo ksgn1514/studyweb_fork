@@ -2,127 +2,67 @@
 <html data-bs-theme="light" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{common :: meta_header('community',~{::link},~{::script})}">
-    
+
 </head>
 
 <body>
     <div th:replace="~{common :: navbar}"></div>
 
     <section>
-        <div></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-4">
-                    <div class="list-group" id="list-tab" role="tablist">
-                        <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list"
-                            href="#list-home" role="tab" aria-controls="home">#home</a>
-                        <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list"
-                            href="#list-profile" role="tab" aria-controls="profile">Profile</a>
-                        <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list"
-                            href="#list-messages" role="tab" aria-controls="messages">Messages</a>
-                        <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list"
-                            href="#list-settings" role="tab" aria-controls="settings">Settings</a>
+        <section>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3">
+                        <!-- カテゴリーリスト -->
+                        <div class="list-group" id="list-tab" role="tablist">
+                            <a class="list-group-item list-group-item-action " id="list-home-list" data-toggle="list"
+                                href="#list-home" role="tab" aria-controls="home">Home</a>
+                            <a class="list-group-item list-group-item-action" id="list-announce-list" data-toggle="list"
+                                href="#list-announcement" role="tab" aria-controls="announcement">Announcement</a>
+                            <a class="list-group-item list-group-item-action" id="list-studyqna-list" data-toggle="list"
+                                href="#list-studyqna" role="tab" aria-controls="studyqna">Study Q&A</a>
+                            <a class="list-group-item list-group-item-action" id="list-side-list" data-toggle="list"
+                                href="#list-side" role="tab" aria-controls="side">Side Project</a>
+                            <a class="list-group-item list-group-item-action" id="list-blahblah-list" data-toggle="list"
+                                href="#list-blahblah" role="tab" aria-controls="blahblah">blah-blah</a>
+                        </div>
                     </div>
-                </div>
-                <div class="col-8">
-                    <div class="tab-content" id="nav-tabContent">
-                        <div class="tab-pane fade show active" id="list-home" role="tabpanel"
-                            aria-labelledby="list-home-list">...</div>
-                        <div class="tab-pane fade" id="list-profile" role="tabpanel"
-                            aria-labelledby="list-profile-list">...</div>
-                        <div class="tab-pane fade" id="list-messages" role="tabpanel"
-                            aria-labelledby="list-messages-list">...</div>
-                        <div class="tab-pane fade" id="list-settings" role="tabpanel"
-                            aria-labelledby="list-settings-list">...</div>
+                    <!-- 中央エリア: 投稿一覧 -->
+                    <div class="col-md-6">
+                        <!--投稿1 -->
+                        <div class="card border-dark text-white bg-dark mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">投稿のタイトル1</h5>
+                                <p class="card-text">投稿内容hawewrwer</p>
+                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                            </div>
+                        </div>
+
+                        <!--投稿2 -->
+                        <div class="card border-dark text-white bg-dark mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">投稿のタイトル2</h5>
+                                <p class="card-text">投稿内容hawewrwer22</p>
+                                <p class="card-text"><small class="text-muted">Last updated 10 mins ago</small></p>
+                            </div>
+                        </div>
+
+
                     </div>
-                    <div class="col"><span>#home</span>
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr></tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="border-1">
-                                        <td>
-                                            <div class="text-white bg-dark border rounded border-0 p-4 p-md-5">
-                                                <h2 class="fw-bold text-white mb-3">게시글1</h2>
-                                                <p class="mb-4">게시글 미리보기</p>
-                                                <div class="my-3"><span>작성일:2024-04-15</span><span></span>
-                                                    <div><svg xmlns="http://www.w3.org/2000/svg" width="1em"
-                                                            height="1em" fill="currentColor" viewBox="0 0 16 16"
-                                                            class="bi bi-star">
-                                                            <path
-                                                                d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z">
-                                                            </path>
-                                                        </svg><span>16</span></div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td></td>
-                                    </tr>
-                                    <tr class="border-1">
-                                        <td>
-                                            <div class="text-white bg-dark border rounded border-0 p-4 p-md-5">
-                                                <h2 class="fw-bold text-white mb-3">게시글2</h2>
-                                                <p class="mb-4">게시글 미리보기</p>
-                                                <div class="my-3"><span>작성일:2024-04-15</span><span></span>
-                                                    <div><svg xmlns="http://www.w3.org/2000/svg" width="1em"
-                                                            height="1em" fill="currentColor" viewBox="0 0 16 16"
-                                                            class="bi bi-star">
-                                                            <path
-                                                                d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z">
-                                                            </path>
-                                                        </svg><span>16</span></div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td></td>
-                                    </tr>
-                                    <tr class="border-1">
-                                        <td>
-                                            <div class="text-white bg-dark border rounded border-0 p-4 p-md-5">
-                                                <h2 class="fw-bold text-white mb-3">게시글3</h2>
-                                                <p class="mb-4">게시글 미리보기</p>
-                                                <div class="my-3"><span>작성일:2024-04-15</span><span></span>
-                                                    <div><svg xmlns="http://www.w3.org/2000/svg" width="1em"
-                                                            height="1em" fill="currentColor" viewBox="0 0 16 16"
-                                                            class="bi bi-star">
-                                                            <path
-                                                                d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z">
-                                                            </path>
-                                                        </svg><span>16</span></div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td></td>
-                                    </tr>
-                                    <tr class="border-1">
-                                        <td>
-                                            <div class="text-white bg-dark border rounded border-0 p-4 p-md-5">
-                                                <h2 class="fw-bold text-white mb-3">게시글4</h2>
-                                                <p class="mb-4">게시글 미리보기</p>
-                                                <div class="my-3"><span>작성일:2024-04-15</span><span></span>
-                                                    <div><svg xmlns="http://www.w3.org/2000/svg" width="1em"
-                                                            height="1em" fill="currentColor" viewBox="0 0 16 16"
-                                                            class="bi bi-star">
-                                                            <path
-                                                                d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z">
-                                                            </path>
-                                                        </svg><span>16</span></div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                    <div class="col-md-3">
+                        <!-- 右側エリア: 投稿作成ボタン & アナウンス一覧 -->
+                        <button type="button" class="btn btn-primary mb-4">記事を作成</button>
+
+                        <!-- アナウンス一覧 -->
+                        <div class="list-group">
+                            <!-- javascriptを使用してアナウンスを動的に生成 -->
                         </div>
                     </div>
                 </div>
             </div>
-    </section>
+        </section>
 
-    <div th:replace="~{common :: footer}"></div>
+        <div th:replace="~{common :: footer}"></div>
 </body>
 
 </html>
