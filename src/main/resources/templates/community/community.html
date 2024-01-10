@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{common :: meta_header('community',~{::link},~{::script})}">
+
+</head>
+
+<body>
+    <div th:replace="~{common :: navbar}"></div>
+
+    <section class="py-4 py-xl-5">
+        <div class="container h-100">
+            <div class="row h-100" style="margin-bottom: 27px">
+                <div
+                    class="col-md-10 col-lg-10 col-xl-8 text-center d-flex d-sm-flex d-md-flex justify-content-center align-items-center mx-auto justify-content-md-start align-items-md-center justify-content-xl-center">
+                    <div>
+                        <p class="fw-bold text-success mb-2">Community</p>
+                        <h2 class="text-uppercase fw-bold mb-3">커뮤니티</h2>
+                        <p class="mb-4">
+                            개발자 99% 커뮤니티에서 수다 떨어요!<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <!-- カテゴリーリスト -->
+                    <div class="list-group" id="list-tab" role="tablist">
+                        <a class="list-group-item list-group-item-action " id="list-home-list" data-toggle="list"
+                            href="#list-home" role="tab" aria-controls="home">Home</a>
+                        <a class="list-group-item list-group-item-action" id="list-announce-list" data-toggle="list"
+                            href="#list-announcement" role="tab" aria-controls="announcement">Announcement</a>
+                        <a class="list-group-item list-group-item-action" id="list-studyqna-list" data-toggle="list"
+                            href="#list-studyqna" role="tab" aria-controls="studyqna">Study Q&A</a>
+                        <a class="list-group-item list-group-item-action" id="list-side-list" data-toggle="list"
+                            href="#list-side" role="tab" aria-controls="side">Side Project</a>
+                        <a class="list-group-item list-group-item-action" id="list-blahblah-list" data-toggle="list"
+                            href="#list-blahblah" role="tab" aria-controls="blahblah">blah-blah</a>
+                    </div>
+                </div>
+                <!-- 中央エリア: 投稿一覧 -->
+                <div class="col-md-6">
+                    <!--投稿1 -->
+                    <div class="card border-dark text-white bg-dark mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">投稿のタイトル1</h5>
+                            <p class="card-text">投稿内容hawewrwer</p>
+                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                        </div>
+                    </div>
+
+                    <!--投稿2 -->
+                    <div class="card border-dark text-white bg-dark mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">投稿のタイトル2</h5>
+                            <p class="card-text">投稿内容hawewrwer22</p>
+                            <p class="card-text"><small class="text-muted">Last updated 10 mins ago</small></p>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="col-md-3">
+                    <!-- 右側エリア: 投稿作成ボタン & アナウンス一覧 -->
+                    <button type="button" class="btn btn-primary mb-4">記事を作成</button>
+
+                    <!-- アナウンス一覧 -->
+                    <div class="list-group">
+                        <!-- javascriptを使用してアナウンスを動的に生成 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div th:replace="~{common :: footer}"></div>
+</body>
+
+</html>

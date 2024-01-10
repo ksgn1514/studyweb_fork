@@ -49,7 +49,7 @@ public class StudysController {
 
         model.addAttribute("studysList", studysDetails);
         
-        return "studys";
+        return "study/studys";
     }
     
     //continue파라미터가 있을 경우 스터디 계속하기 페이지로 이동
@@ -59,7 +59,7 @@ public class StudysController {
         List<StudysDetail> studysDetails = util.getStudyListAll();
 
         model.addAttribute("studysList", studysDetails);
-        return "studys";
+        return "study/studys";
     }
 
     //스터디 필터링
@@ -76,7 +76,7 @@ public class StudysController {
         }
 
         model.addAttribute("studysList", studysDetails);
-        return "studys :: studys-list";
+        return "study/studys :: studys-list";
     }
     
 
@@ -84,7 +84,7 @@ public class StudysController {
     @GetMapping("enroll")
     private String studyenroll() {
 
-        return "studyenroll";
+        return "study/studyenroll";
     }
     //스터디 등록
     @PostMapping("create")
@@ -122,7 +122,7 @@ public class StudysController {
         Studys result = studysService.createStudy(studys);
         System.out.println(result);
         
-        return "redirect:/studys";
+        return "redirect:/study/studys";
     }
     
 
@@ -142,7 +142,7 @@ public class StudysController {
         model.addAttribute("applications", applications);
         model.addAttribute("applicantCount", applicantCount);
 
-        return "studydetail";
+        return "study/studydetail";
     }
 
     @PostMapping("apply")// studys/apply
@@ -160,7 +160,7 @@ public class StudysController {
 
         studyApplicationService.addStudyApplication(studyApplication);
         
-        return "redirect:/studys";
+        return "redirect:/study/studys";
     }
     
 
