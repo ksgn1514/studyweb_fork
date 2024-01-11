@@ -44,41 +44,32 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-3">
-                    <!-- カテゴリーリスト -->
+                    <!-- 카테고리 리스트 -->
                     <div class="list-group" id="list-tab" role="tablist">
-                        <a class="list-group-item list-group-item-action " id="list-home-list" data-toggle="list"
-                            href="#list-home" role="tab" aria-controls="home">Home</a>
-                        <a class="list-group-item list-group-item-action" id="list-announce-list" data-toggle="list"
-                            href="#list-announcement" role="tab" aria-controls="announcement">Announcement</a>
-                        <a class="list-group-item list-group-item-action" id="list-studyqna-list" data-toggle="list"
-                            href="#list-studyqna" role="tab" aria-controls="studyqna">Study Q&A</a>
-                        <a class="list-group-item list-group-item-action" id="list-side-list" data-toggle="list"
-                            href="#list-side" role="tab" aria-controls="side">Side Project</a>
-                        <a class="list-group-item list-group-item-action" id="list-blahblah-list" data-toggle="list"
-                            href="#list-blahblah" role="tab" aria-controls="blahblah">blah-blah</a>
+                        <a class="list-group-item list-group-item-action " th:id="list-home-list" data-toggle="list"
+                            th:href="@{/community}" role="tab" th:aria-controls="home">Home</a>
+                        <a class="list-group-item list-group-item-action" th:id="list-announce-list" data-toggle="list"
+                            th:href="@{/community/announcement}" role="tab" th:aria-controls="announcement">공지사항</a>
+                    </div>
+
+                    <div class="list-group" id="list-tab" role="tablist">
+                        <a th:each="category : ${categoryList}" class="list-group-item list-group-item-action"
+                            th:id="${'list-' + category.url + '-list'}" data-toggle="list"
+                            th:href="@{'/community/' + ${category.url}}" role="tab" th:aria-controls="${category.url}"
+                            th:text="${category.name}"></a>
                     </div>
                 </div>
-                <!-- 中央エリア: 投稿一覧 -->
+
+                <!-- 포스트 리스트 -->
                 <div class="col-md-6">
-                    <!--投稿1 -->
-                    <div class="card border-dark text-white bg-dark mb-3">
+
+                    <div th:each="post : ${postList}" class="card border-dark text-white bg-dark mb-3">
                         <div class="card-body">
-                            <h5 class="card-title">投稿のタイトル1</h5>
-                            <p class="card-text">投稿内容hawewrwer</p>
-                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                            <h5 class="card-title" th:text="${post.title}"></h5>
+                            <p class="card-text" th:text="${post.content}"></p>
+                            <p class="card-text"><small class="text-muted" th:text="${post.updatedAt}"></small></p>
                         </div>
                     </div>
-
-                    <!--投稿2 -->
-                    <div class="card border-dark text-white bg-dark mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">投稿のタイトル2</h5>
-                            <p class="card-text">投稿内容hawewrwer22</p>
-                            <p class="card-text"><small class="text-muted">Last updated 10 mins ago</small></p>
-                        </div>
-                    </div>
-
-
                 </div>
 
                 <div class="col-md-3">

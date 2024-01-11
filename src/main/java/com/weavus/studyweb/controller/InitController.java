@@ -40,17 +40,4 @@ public class InitController {
         return "user/login";
     }
 
-//Community 커뮤니티 작성시 파일 분할.
-    @GetMapping("/community")
-    private String community(){
-        
-        return "community/community";
-    }
-    //continueクエリパラメータに対応
-    @GetMapping("/community?continue")
-    private String communityContinue(){
-
-        return "community/community";
-    }
-
 }

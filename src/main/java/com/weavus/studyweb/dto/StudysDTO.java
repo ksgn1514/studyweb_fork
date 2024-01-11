@@ -20,7 +20,7 @@ import lombok.ToString;
 @ToString
 public class StudysDTO {
 
-    private long id;
+    private Long id;
     private String studyName;
     private String category;
     private String studyDetail;
@@ -30,6 +30,7 @@ public class StudysDTO {
     private String endDate;
     
     private String status;
+    private String createDate;
 
 
     public Timestamp getTsStartDate() {
@@ -83,6 +84,7 @@ public class StudysDTO {
         studyDTO.setEndDate(end);
 
         studyDTO.setStatus();
+        studyDTO.setCreateDate(dateFormat.format(studys.getCreateDate()));
 
         return studyDTO;
     }

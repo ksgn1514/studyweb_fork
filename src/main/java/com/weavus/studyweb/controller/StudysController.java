@@ -42,8 +42,8 @@ public class StudysController {
     @Autowired
     private CommonUtility util;
 
-    @GetMapping("")
-    private String studyAll(Model model){
+    @GetMapping("") //continue파라미터 포함
+    private String studyAll(@RequestParam(required = false) String conti, Model model){
         // Studys 전체 리스트 취득
         List<StudysDetail> studysDetails = util.getStudyListAll();
 
@@ -52,16 +52,6 @@ public class StudysController {
         return "study/studys";
     }
     
-    //continue파라미터가 있을 경우 스터디 계속하기 페이지로 이동
-    @GetMapping(params = "continue")
-    private String studysContinue(Model model){
-        // Studys 전체 리스트 취득
-        List<StudysDetail> studysDetails = util.getStudyListAll();
-
-        model.addAttribute("studysList", studysDetails);
-        return "study/studys";
-    }
-
     //스터디 필터링
     @GetMapping("filter")
     public String filterStudys(@RequestParam String status, Model model) {
