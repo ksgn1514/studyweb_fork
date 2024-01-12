@@ -71,7 +71,8 @@
 
               </div>
               <h4 th:text="${studysdetail.studys.studyName}">스터디 이름</h4>
-              <p th:utext="${studysdetail.studys.studyDetail}">상세설명</p>
+              <p style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; height: 4.5em; line-height: 1.5em;"
+                th:utext="${studysdetail.studys.studyDetail}">상세설명</p>
               <a class="btn btn-primary" role="button" th:href="@{/studys/detail(id=${studysdetail.studys.id})}">자세히</a>
             </div>
           </div>

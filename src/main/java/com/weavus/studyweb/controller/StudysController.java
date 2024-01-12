@@ -150,7 +150,7 @@ public class StudysController {
 
         studyApplicationService.addStudyApplication(studyApplication);
         
-        return "redirect:/study/studys";
+        return "redirect:/studys";
     }
     
 
