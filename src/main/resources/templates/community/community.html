@@ -43,9 +43,9 @@
     <section>
         <div class="container">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-3" style="margin-bottom: 10px;">
                     <!-- 카테고리 리스트 -->
-                    <div class="list-group" id="list-tab" role="tablist">
+                    <div class="list-group" id="list-tab" role="tablist" style="margin-bottom: 20px;">
                         <a class="list-group-item list-group-item-action " th:id="list-home-list" data-toggle="list"
                             th:href="@{/community}" role="tab" th:aria-controls="home">Home</a>
                         <a class="list-group-item list-group-item-action" th:id="list-announce-list" data-toggle="list"
@@ -64,21 +64,53 @@
                 <div class="col-md-6">
 
                     <div th:each="post : ${postList}" class="card border-dark text-white bg-dark mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title" th:text="${post.title}"></h5>
-                            <p class="card-text" th:text="${post.content}"></p>
-                            <p class="card-text"><small class="text-muted" th:text="${post.updatedAt}"></small></p>
+                        <div class="row no-gutters">
+
+                            <!-- 텍스트 -->
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title" th:text="${post.title}"></h5>
+                                    <!-- 내용을 한 줄로 제한하고 글자수가 많으면 생략 표시 -->
+                                    <p class="card-text"
+                                        style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+                                        th:text="${post.contents}">
+                                    </p>
+                                    <p class="card-text">
+                                        <small class="text-muted">
+                                            <span th:text="${post.authorName}"></span> |
+                                            <span th:text="${post.createDate}"></span>
+                                        </small>
+                                    </p>
+                                    <!-- 조회수, 좋아요 수, 댓글 수를 아이콘과 함께 표시 -->
+                                    <p class="card-text">
+                                        <small>
+                                            <i class="fa fa-eye" aria-hidden="true"></i>
+                                            <span th:text="${post.viewCount}"></span>
+                                            <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                                            <span th:text="${post.likeCount}"></span>
+                                            <i class="fa fa-comments" aria-hidden="true"></i>
+                                            <span th:text="${post.commentCount}"></span>
+                                        </small>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- 이미지 -->
+                            <div class="col-md-4 d-flex justify-content-center align-items-center">
+                                <img th:src="${post.filepath} ? @{${post.filepath}} : @{/assets/svg/logo.svg}"
+                                    alt="Post Image" class="card-img-top img-fluid">
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-md-3">
-                    <!-- 右側エリア: 投稿作成ボタン & アナウンス一覧 -->
-                    <button type="button" class="btn btn-primary mb-4">記事を作成</button>
+                    <!-- 오른쪽영역 글쓰기버튼, 공지사항 일람 등-->
+                    <a class="btn btn-primary mb-4" role="button" href="/community/post">글쓰기</a>
 
-                    <!-- アナウンス一覧 -->
+                    <!-- 공지사항일람 -->
                     <div class="list-group">
-                        <!-- javascriptを使用してアナウンスを動的に生成 -->
+                        <!-- TODO -->
                     </div>
                 </div>
             </div>

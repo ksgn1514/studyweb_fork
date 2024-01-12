@@ -24,12 +24,9 @@ public class CommunityService {
     @Autowired
     private PostCategoryRepository postCategoryRepository;
 
+// Post
     public List<Post> findAllPost(){
-        return postRepository.findAll();
-    }
-
-    public List<PostCategory> findAllPostCategory(){
-        return postCategoryRepository.findAll();
+        return postRepository.findAllByOrderByCreateDateDesc();
     }
 
     public List<Post> findPostByCategory(String categoryUrl){
@@ -38,8 +35,30 @@ public class CommunityService {
         return postRepository.findByCategory_Id(categoryId);
     }
 
+    public void createPost(Post post) {
+        postRepository.save(post);
+    }
+
+
+// PostCategory
+    public List<PostCategory> findAllPostCategory(){
+        return postCategoryRepository.findAll();
+    }
+
+    public PostCategory findPostCategoryByName(String name){
+        return postCategoryRepository.findByName(name);
+    }
+
+    public PostCategory findPostCategoryByUrl(String url){
+        return postCategoryRepository.findByUrl(url);
+    }
+
+
+
+// PostLike
     public int countLike(Long postId) {
         return postLikeRepository.countByPost_Id(postId);
     }
+
 
 }

@@ -7,22 +7,23 @@ import java.text.SimpleDateFormat;
 import lombok.Data;
 
 @Data
-public class PostDTO {
+public class PostDetailDTO {
 
     private Long id;
     private String title;
     private String authorName;
     private int commentCount;
     private int likeCount;
+    private int viewCount;
     private String categoryName;
     private String createDate;
     private String contents;
-    private int viewCount;
+    private String filepath;
 
-    public static PostDTO toPostDTO(Post post) {
+    public static PostDetailDTO toPostDetailDTO(Post post) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        PostDTO postDTO = new PostDTO();
+        PostDetailDTO postDTO = new PostDetailDTO();
 
         postDTO.setId(post.getId());
         postDTO.setTitle(post.getTitle());

@@ -27,6 +27,7 @@ public class Post {
     private String contents;
     @Column(name="view_count")
     private Integer viewCount;
+    private String filepath;
     
     @ManyToOne
     @JoinColumn(name = "category_id")

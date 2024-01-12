@@ -6,8 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.weavus.studyweb.dto.PostDetailDTO;
 import com.weavus.studyweb.dto.StudysDTO;
 import com.weavus.studyweb.dto.StudysDetail;
+import com.weavus.studyweb.entity.Post;
 import com.weavus.studyweb.entity.StudyApplication;
 import com.weavus.studyweb.entity.Studys;
 import com.weavus.studyweb.service.StudyApplicationService;
@@ -55,6 +57,15 @@ public class CommonUtility {
         List<Studys> studysList = studysService.findRecruiting();
         List<StudysDetail> studysDetails = toDetailList(studysList);
         return studysDetails;
+    }
+
+    public List<PostDetailDTO> toPostDetailDto (List<Post> postList) {
+        List<PostDetailDTO> postDetailDtoList = new ArrayList<>();
+        for (Post post : postList) {
+            PostDetailDTO postDetailDto = PostDetailDTO.toPostDetailDTO(post);
+            postDetailDtoList.add(postDetailDto);
+        }
+        return postDetailDtoList;
     }
 
 }
