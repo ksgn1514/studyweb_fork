@@ -22,7 +22,7 @@ public class UserController {
     @GetMapping("/join")
     private String join() {
 
-        return "join";
+        return "user/join";
     }
 
     //회원가입

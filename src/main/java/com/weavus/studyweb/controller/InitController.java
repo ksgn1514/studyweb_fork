@@ -7,35 +7,29 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.weavus.studyweb.entity.Studys;
-import com.weavus.studyweb.service.StudysService;
+import com.weavus.studyweb.dto.StudysDetail;
 import com.weavus.studyweb.utility.CommonUtility;
-import com.weavus.studyweb.utility.StudysDetail;
 
 @Controller
 public class InitController {
-    @Autowired
-    private StudysService studysService;
     @Autowired
     private CommonUtility util;
 
     @GetMapping("/")
     private String init(Model model){
-        // Studysのリストの取得
-        List<Studys> studysList = studysService.findRecruiting();
-        List<StudysDetail> studysDetails = util.toDetailList(studysList);
+        // 모집중 스터디 리스트 취득
+        List<StudysDetail> studysList = util.getStudyListRecruiting();
 
-        model.addAttribute("studysList", studysDetails);
+        model.addAttribute("studysList", studysList);
         return "index";
     }
 
     @GetMapping("/home")
     private String home(Model model){
-        // Studysのリストの取得
-        List<Studys> studysList = studysService.findRecruiting();
-        List<StudysDetail> studysDetails = util.toDetailList(studysList);
+        // 모집중 스터디 리스트 취득
+        List<StudysDetail> studysList = util.getStudyListRecruiting();
 
-        model.addAttribute("studysList", studysDetails);
+        model.addAttribute("studysList", studysList);
         return "index";
     }
 
@@ -43,20 +37,7 @@ public class InitController {
     @GetMapping("/loginForm")
     private String login() {
 
-        return "login";
-    }
-
-//Community 今後別途ファイルに分割
-    @GetMapping("/community")
-    private String community(){
-        
-        return "community";
-    }
-    //continueクエリパラメータに対応
-    @GetMapping("/community?continue")
-    private String communityContinue(){
-
-        return "community";
+        return "user/login";
     }
 
 }

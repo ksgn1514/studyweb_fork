@@ -3,6 +3,7 @@ package com.weavus.studyweb.entity;
 import java.sql.Timestamp;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Entity;
@@ -17,7 +18,7 @@ public class Studys {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String studyName;
     private String category;
     private String studyDetail;
@@ -31,5 +32,6 @@ public class Studys {
 
     @CreationTimestamp
     private Timestamp createDate;
+    @UpdateTimestamp
     private Timestamp updateDate;
 }

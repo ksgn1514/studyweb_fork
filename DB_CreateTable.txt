@@ -1,0 +1,119 @@
+
+CREATE TABLE `user` (
+	`id` BIGINT(10) NOT NULL AUTO_INCREMENT,
+	`userId` VARCHAR(20) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`password` VARCHAR(150) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`username` VARCHAR(30) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`role` VARCHAR(10) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`create_date` TIMESTAMP NOT NULL DEFAULT current_timestamp(),
+	PRIMARY KEY (`id`) USING BTREE,
+	UNIQUE INDEX `userId` (`userId`) USING BTREE
+);
+
+CREATE TABLE `studys` (
+	`id` BIGINT(10) NOT NULL AUTO_INCREMENT,
+	`study_name` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`category` VARCHAR(10) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`study_detail` VARCHAR(500) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`writer_userid` VARCHAR(30) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`filepath` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`start_date` TIMESTAMP NULL DEFAULT NULL,
+	`end_date` TIMESTAMP NULL DEFAULT NULL,
+	`create_date` TIMESTAMP NULL DEFAULT NULL,
+	`update_date` TIMESTAMP NULL DEFAULT NULL,
+	PRIMARY KEY (`id`) USING BTREE
+);
+
+CREATE TABLE `study_application` (
+	`id` BIGINT(10) NOT NULL AUTO_INCREMENT,
+	`user_id` BIGINT(10) NOT NULL,
+	`study_id` BIGINT(10) NOT NULL,
+	`application_date` TIMESTAMP NOT NULL DEFAULT current_timestamp(),
+	PRIMARY KEY (`id`) USING BTREE,
+	INDEX `study_application_ibfk_1` (`user_id`) USING BTREE,
+	INDEX `study_application_ibfk_2` (`study_id`) USING BTREE,
+	CONSTRAINT `study_application_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON UPDATE RESTRICT ON DELETE RESTRICT,
+	CONSTRAINT `study_application_ibfk_2` FOREIGN KEY (`study_id`) REFERENCES `studys` (`id`) ON UPDATE RESTRICT ON DELETE RESTRICT
+);
+
+CREATE TABLE `post` (
+		`id` BIGINT(10) NOT NULL AUTO_INCREMENT,
+	`title` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`contents` TEXT NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`category_id` BIGINT(10) NULL DEFAULT NULL,
+	`author_id` BIGINT(10) NULL DEFAULT NULL,
+	`view_count` INT(11) NULL DEFAULT '0',
+	`filepath` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`create_date` TIMESTAMP NOT NULL DEFAULT current_timestamp(),
+	PRIMARY KEY (`id`) USING BTREE,
+	INDEX `author_id` (`author_id`) USING BTREE,
+	INDEX `category_id` (`category_id`) USING BTREE,
+	CONSTRAINT `FK_post_post_category` FOREIGN KEY (`category_id`) REFERENCES `post_category` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION,
+	CONSTRAINT `FK_post_user` FOREIGN KEY (`author_id`) REFERENCES `user` (`id`) ON UPDATE SET NULL ON DELETE SET NULL
+);
+
+CREATE TABLE `comment` (
+	`id` BIGINT(10) NOT NULL AUTO_INCREMENT,
+	`post_id` BIGINT(10) NULL DEFAULT '0',
+	`author_id` BIGINT(10) NULL DEFAULT '0',
+	`contents` VARCHAR(200) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`create_date` TIMESTAMP NOT NULL DEFAULT current_timestamp(),
+	PRIMARY KEY (`id`) USING BTREE,
+	INDEX `post_id` (`post_id`) USING BTREE,
+	INDEX `author_id` (`author_id`) USING BTREE,
+	CONSTRAINT `FK__post` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
+	CONSTRAINT `FK_comment_user` FOREIGN KEY (`author_id`) REFERENCES `user` (`id`) ON UPDATE SET NULL ON DELETE SET NULL
+);
+
+CREATE TABLE `post_like` (
+	`id` BIGINT(10) NOT NULL AUTO_INCREMENT,
+	`post_id` BIGINT(10) NOT NULL,
+	`user_id` BIGINT(10) NOT NULL,
+	`created_at` TIMESTAMP NOT NULL DEFAULT current_timestamp(),
+	PRIMARY KEY (`id`) USING BTREE,
+	INDEX `post_id` (`post_id`) USING BTREE,
+	INDEX `user_id` (`user_id`) USING BTREE,
+	CONSTRAINT `post_like_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
+	CONSTRAINT `post_like_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE `post_category` (
+	`id` BIGINT(10) NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_general_ci',
+	PRIMARY KEY (`id`) USING BTREE,
+	UNIQUE INDEX `name` (`name`) USING BTREE
+);
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////
+
+Test Data Insert
+
+INSERT INTO `user` (`id`, `userId`, `password`, `username`, `role`, `create_date`) VALUES (6, 'test1', '$2a$10$P9u4LVhHawRReFGsOxXiBOBsfiNNos5XhBzvzv0ltDCo.04unNl.2', '모집자테스터', 'USER', '2024-01-12 21:21:45');
+INSERT INTO `user` (`id`, `userId`, `password`, `username`, `role`, `create_date`) VALUES (7, 'test2', '$2a$10$ddQTpQq0r4hhvGpZSl9zVerO9iReQ/MqK3dJ4QJCg/6obPP/0E5kO', '참가자테스터1', 'USER', '2024-01-12 21:22:12');
+INSERT INTO `user` (`id`, `userId`, `password`, `username`, `role`, `create_date`) VALUES (8, 'test3', '$2a$10$IFVDx0hJZhtYmmvxxnTsQ.B7NWAsjUvU/Scl/OaglselR9ivY2Dm.', '참가자테스터2', 'USER', '2024-01-12 21:22:26');
+
+INSERT INTO `study_application` (`id`, `user_id`, `study_id`, `application_date`) VALUES (1, 7, 5, '2024-01-12 21:31:48');
+INSERT INTO `study_application` (`id`, `user_id`, `study_id`, `application_date`) VALUES (2, 8, 5, '2024-01-12 21:32:55');
+
+
+INSERT INTO `studys` (`id`, `study_name`, `category`, `study_detail`, `writer_userid`, `filepath`, `start_date`, `end_date`, `create_date`, `update_date`) VALUES (3, 'JavaScript Todo', '교육용', 'test', 'ksgn1514', '/assets/img/study/study_1d15968e-82de-44c1-be58-6efcc4af1cc7.jpg', '2023-12-30 00:00:00', '2024-01-06 00:00:00', '2023-12-28 15:50:13', NULL);
+INSERT INTO `studys` (`id`, `study_name`, `category`, `study_detail`, `writer_userid`, `filepath`, `start_date`, `end_date`, `create_date`, `update_date`) VALUES (4, 'Java Spring 게시판만들기', '교육용', '주말반\r\n소요기간: 약 1달\r\n모집인원: 5명\r\n', 'ksgn1514', '/assets/img/study/study_3c47d822-1404-41bf-9795-640d03765e83.png', '2024-01-01 00:00:00', '2024-01-31 00:00:00', '2023-12-28 16:35:13', NULL);
+INSERT INTO `studys` (`id`, `study_name`, `category`, `study_detail`, `writer_userid`, `filepath`, `start_date`, `end_date`, `create_date`, `update_date`) VALUES (5, 'Test Study', '기타', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisl tincidunt eget nullam non. Quis hendrerit dolor magna eget est lorem ipsum dolor sit. Volutpat odio facilisis mauris sit amet massa. Commodo odio aenean sed adipiscing diam donec adipiscing tristique. Mi eget mauris pharetra et. Non tellus orci ac auctor augue. Elit at imperdiet dui accumsan sit. Ornare arcu dui vivamus arcu felis. Egestas integer eget aliquet nibh praesent. In hac habitasse platea dictumst quisque sagittis purus. Pulvinar elementum integer enim neque volutpat ac.', 'test1', NULL, '2024-01-30 00:00:00', '2024-02-26 00:00:00', '2023-12-28 17:19:08', NULL);
+INSERT INTO `studys` (`id`, `study_name`, `category`, `study_detail`, `writer_userid`, `filepath`, `start_date`, `end_date`, `create_date`, `update_date`) VALUES (6, 'python', '교육용', 'qweqwerrrtest', 'ksgn1514', '/assets/img/study/study_fbc13ae5-89e0-4b4d-b491-876714a95f82.png', '2024-02-01 00:00:00', '2024-01-30 00:00:00', '2023-12-29 10:01:24', NULL);
+INSERT INTO `studys` (`id`, `study_name`, `category`, `study_detail`, `writer_userid`, `filepath`, `start_date`, `end_date`, `create_date`, `update_date`) VALUES (7, 'Java Silver', '자격증', '자바 실버 자격증 스터디.\r\n모집인원 미정\r\n매주 일요일 진척상황공유', 'ksgn1514', '/assets/img/study/study_39a63a38-c6f5-4677-8ba0-e4b10c2873e9.png', '2024-02-01 00:00:00', '2024-03-31 00:00:00', '2024-01-05 09:57:45', NULL);
+
+
+INSERT INTO `post` (`id`, `title`, `contents`, `category_id`, `author_id`, `view_count`, `filepath`, `create_date`) VALUES (3, 'test123', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisl tincidunt eget nullam non. Quis hendrerit dolor magna eget est lorem ipsum dolor sit. Volutpat odio facilisis mauris sit amet massa. Commodo odio aenean sed adipiscing diam donec adipiscing tristique. Mi eget mauris pharetra et. Non tellus orci ac auctor augue. Elit at imperdiet dui accumsan sit. Ornare arcu dui vivamus arcu felis. Egestas integer eget aliquet nibh praesent. In hac habitasse platea dictumst quisque sagittis purus. Pulvinar elementum integer enim neque volutpat ac.\r\n\r\nSenectus et netus et malesuada. Nunc pulvinar sapien et ligula ullamcorper malesuada proin. Neque convallis a cras semper auctor. Libero id faucibus nisl tincidunt eget. Leo a diam sollicitudin tempor id. A lacus vestibulum sed arcu non odio euismod lacinia. In tellus integer feugiat scelerisque. Feugiat in fermentum posuere urna nec tincidunt praesent. Porttitor rhoncus dolor purus non enim praesent elementum facilisis. Nisi scelerisque eu ultrices vitae auctor eu augue ut lectus. Ipsum faucibus vitae aliquet nec ullamcorper sit amet risus. Et malesuada fames ac turpis egestas sed. Sit amet nisl suscipit adipiscing bibendum est ultricies. Arcu ac tortor dignissim convallis aenean et tortor at. Pretium viverra suspendisse potenti nullam ac tortor vitae purus. Eros donec ac odio tempor orci dapibus ultrices. Elementum nibh tellus molestie nunc. Et magnis dis parturient montes nascetur. Est placerat in egestas erat imperdiet. Consequat interdum varius sit amet mattis vulputate enim.\r\n\r\nSit amet nulla facilisi morbi tempus. Nulla facilisi cras fermentum odio eu. Etiam erat velit scelerisque in dictum non consectetur a erat. Enim nulla aliquet porttitor lacus luctus accumsan tortor posuere. Ut sem nulla pharetra diam. Fames ac turpis egestas maecenas. Bibendum neque egestas congue quisque egestas diam. Laoreet id donec ultrices tincidunt arcu non sodales neque. Eget felis eget nunc lobortis mattis aliquam faucibus purus. Faucibus interdum posuere lorem ipsum dolor sit.', 2, 1, 0, '/assets/img/post/post_69d035bb-0a0f-4f85-8f99-d04d1ef0a998.png', '2024-01-12 20:56:24');
+INSERT INTO `post` (`id`, `title`, `contents`, `category_id`, `author_id`, `view_count`, `filepath`, `create_date`) VALUES (2, 'Test1', 'test123', 1, 1, 0, NULL, '2024-01-12 19:03:30');
+
+
+INSERT INTO `post_category` (`id`, `name`, `url`) VALUES (1, '공지사항', 'announcement');
+INSERT INTO `post_category` (`id`, `name`, `url`) VALUES (2, 'Study Q&A', 'studyqna');
+INSERT INTO `post_category` (`id`, `name`, `url`) VALUES (3, '프로젝트 공유', 'project');
+INSERT INTO `post_category` (`id`, `name`, `url`) VALUES (4, '자유게시판', 'free');

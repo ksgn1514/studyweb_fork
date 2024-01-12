@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{common :: meta_header('community',~{::link},~{::script})}">
+
+</head>
+
+<body>
+    <div th:replace="~{common :: navbar}"></div>
+
+    <section class="py-4 py-xl-5">
+        <div class="container h-100">
+            <div class="row h-100" style="margin-bottom: 27px">
+                <div
+                    class="col-md-10 col-lg-10 col-xl-8 text-center d-flex d-sm-flex d-md-flex justify-content-center align-items-center mx-auto justify-content-md-start align-items-md-center justify-content-xl-center">
+                    <div>
+                        <p class="fw-bold text-success mb-2">Community</p>
+                        <h2 class="text-uppercase fw-bold mb-3">커뮤니티</h2>
+                        <p class="mb-4">
+                            개발자 99% 커뮤니티에서 수다 떨어요!<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3" style="margin-bottom: 10px;">
+                    <!-- 카테고리 리스트 -->
+                    <div class="list-group" id="list-tab" role="tablist" style="margin-bottom: 20px;">
+                        <a class="list-group-item list-group-item-action " th:id="list-home-list" data-toggle="list"
+                            th:href="@{/community}" role="tab" th:aria-controls="home">Home</a>
+                        <a class="list-group-item list-group-item-action" th:id="list-announce-list" data-toggle="list"
+                            th:href="@{/community/announcement}" role="tab" th:aria-controls="announcement">공지사항</a>
+                    </div>
+
+                    <div class="list-group" id="list-tab" role="tablist">
+                        <a th:each="category : ${categoryList}" class="list-group-item list-group-item-action"
+                            th:id="${'list-' + category.url + '-list'}" data-toggle="list"
+                            th:href="@{'/community/' + ${category.url}}" role="tab" th:aria-controls="${category.url}"
+                            th:text="${category.name}"></a>
+                    </div>
+                </div>
+
+                <!-- 포스트 리스트 -->
+                <div class="col-md-6">
+
+                    <div th:each="post : ${postList}" class="card border-dark text-white bg-dark mb-3">
+                        <div class="row no-gutters">
+
+                            <!-- 텍스트 영역-->
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title" th:text="${post.title}"></h5>
+                                    <!-- 내용을 한 줄로 제한하고 글자수가 많으면 생략 표시 -->
+                                    <p class="card-text"
+                                        style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+                                        th:text="${post.contents}">
+                                    </p>
+                                    <p class="card-text">
+                                        <small class="text-muted">
+                                            <span th:text="${post.authorName}"></span> |
+                                            <span th:text="${post.createDate}"></span>
+                                        </small>
+                                    </p>
+                                    <!-- 조회수, 좋아요 수, 댓글 수를 아이콘과 함께 표시 -->
+                                    <p class="card-text">
+                                        <small>
+                                            <i class="fa fa-eye" aria-hidden="true"></i>
+                                            <span th:text="${post.viewCount}"></span>
+                                            <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                                            <span th:text="${post.likeCount}"></span>
+                                            <i class="fa fa-comments" aria-hidden="true"></i>
+                                            <span th:text="${post.commentCount}"></span>
+                                        </small>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- 이미지 -->
+                            <div class="col-md-4 d-flex justify-content-center align-items-center">
+                                <img th:src="${post.filepath} ? @{${post.filepath}} : @{/assets/svg/logo.svg}"
+                                    alt="Post Image" class="card-img-top img-fluid">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <!-- 오른쪽영역 글쓰기버튼, 공지사항 일람 등-->
+                    <a class="btn btn-primary mb-4" role="button" href="/community/post">글쓰기</a>
+
+                    <!-- 공지사항일람 -->
+                    <div class="list-group">
+                        <!-- TODO -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div th:replace="~{common :: footer}"></div>
+</body>
+
+</html>
