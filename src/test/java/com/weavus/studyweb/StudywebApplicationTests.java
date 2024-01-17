@@ -9,14 +9,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.weavus.studyweb.entity.Studys;
-import com.weavus.studyweb.service.StudysService;
+import com.weavus.studyweb.entity.Study;
+import com.weavus.studyweb.service.StudyService;
 
 @SpringBootTest
 class StudywebApplicationTests {
 
     @Autowired
-    private StudysService studys;
+    private StudyService studyService;
 
     @Test
     void contextLoads() {
@@ -24,8 +24,8 @@ class StudywebApplicationTests {
     }
 
     @Test
-    void saveStudys() throws ParseException{
-        Studys study = new Studys();
+    void saveStudy() throws ParseException{
+        Study study = new Study();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         String str = "2024/1/12";
         Date date = sdf.parse(str);
@@ -38,16 +38,16 @@ class StudywebApplicationTests {
         study.setWriterUserid("123123");
         study.setStartDate(start);
 
-        studys.createStudy(study);
+        studyService.createStudy(study);
     }
     @Test
-    void findStudys(){
-        System.out.println(studys.findAll());
+    void findStudy(){
+        System.out.println(studyService.findAll());
     }
 
     @Test
     void findRecruiting(){
-        System.out.println(studys.findRecruiting());
+        System.out.println(studyService.findRecruiting());
     }
 
 }

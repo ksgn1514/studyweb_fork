@@ -19,7 +19,7 @@
   <script th:src="@{/assets/js/bold-and-dark.js}"></script>
   <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js}"></script>
 
-  <!--各View固有で読み込むもの -->
+  <!-- 각 View 고유특성 -->
   <th:block th:replace="${links} ?: _" />
   <th:block th:replace="${scripts} ?: _" />
 
@@ -41,30 +41,34 @@
             <a class="nav-link" th:href="@{/home}">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" th:href="@{/studys}">Studys</a>
+            <a class="nav-link" th:href="@{/study}">Study</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" th:href="@{/community}">Community</a>
           </li>
         </ul>
 
+        <!-- 로그인중인 유저가 있으면 프로필, 로그아웃 표시 -->
         <th:block th:if="${user != null}">
           <div style="margin-right: 4px" th:text="${user.username}"></div>
           <a class="btn btn-light btn-sm shadow" role="button" href="logout">Logout</a>
         </th:block>
+        <!-- 로그인중인 유저가 없으면 로그인, 회원가입 버튼 표시 -->
         <th:block th:if="${user == null}">
           <a class="btn btn-light btn-sm shadow" role="button" href="loginForm" style="margin-right: 4px">Login</a>
           <a class="btn btn-primary shadow" role="button" href="join">Join</a>
         </th:block>
+
       </div>
     </div>
   </nav>
+
 
   <footer class="bg-dark" th:fragment="footer">
     <div class="container py-4 py-lg-5">
       <hr>
       <div class="text-muted d-flex justify-content-between align-items-center pt-3">
-        <p class="mb-0">Copyright © 2023 Brand</p>
+        <p class="mb-0">Copyright © 2024 Weavus</p>
         <ul class="list-inline mb-0">
           <li class="list-inline-item"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
               fill="currentColor" viewBox="0 0 16 16" class="bi bi-facebook">

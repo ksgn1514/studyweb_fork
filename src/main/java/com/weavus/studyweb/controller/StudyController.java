@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.weavus.studyweb.auth.PrincipalDetails;
-import com.weavus.studyweb.dto.StudysDTO;
-import com.weavus.studyweb.dto.StudysDetail;
+import com.weavus.studyweb.dto.StudyDTO;
+import com.weavus.studyweb.dto.StudyDetail;
 import com.weavus.studyweb.entity.StudyApplication;
-import com.weavus.studyweb.entity.Studys;
+import com.weavus.studyweb.entity.Study;
 import com.weavus.studyweb.entity.User;
 import com.weavus.studyweb.service.StudyApplicationService;
-import com.weavus.studyweb.service.StudysService;
+import com.weavus.studyweb.service.StudyService;
 import com.weavus.studyweb.utility.CommonUtility;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,11 +32,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 @Controller
-@RequestMapping("/studys")
-public class StudysController {
+@RequestMapping("/study")
+public class StudyController {
     
     @Autowired
-    private StudysService studysService;
+    private StudyService studyService;
     @Autowired
     private StudyApplicationService studyApplicationService;
     @Autowired
@@ -44,29 +44,29 @@ public class StudysController {
 
     @GetMapping("") //continue파라미터 포함
     private String studyAll(@RequestParam(required = false) String conti, Model model){
-        // Studys 전체 리스트 취득
-        List<StudysDetail> studysDetails = util.getStudyListAll();
+        // Study 전체 리스트 취득
+        List<StudyDetail> studyDetails = util.getStudyListAll();
 
-        model.addAttribute("studysList", studysDetails);
+        model.addAttribute("studyList", studyDetails);
         
-        return "study/studys";
+        return "study/study";
     }
     
     //스터디 필터링
     @GetMapping("filter")
-    public String filterStudys(@RequestParam String status, Model model) {
-        List<StudysDetail> studysDetails = new ArrayList<>();
+    public String filterStudy(@RequestParam String status, Model model) {
+        List<StudyDetail> studyDetails = new ArrayList<>();
 
         // "모집중" 스터디 목록 취득
         if ("recruiting".equals(status)){
-            studysDetails = util.getStudyListRecruiting();
+            studyDetails = util.getStudyListRecruiting();
         } else {
             // "전체" 또는 유효하지 않은 status 값에 대해서는 전체 목록 반환
-            studysDetails = util.getStudyListAll();
+            studyDetails = util.getStudyListAll();
         }
 
-        model.addAttribute("studysList", studysDetails);
-        return "study/studys :: studys-list";
+        model.addAttribute("studyList", studyDetails);
+        return "study/study :: study-list";
     }
     
 
@@ -78,20 +78,20 @@ public class StudysController {
     }
     //스터디 등록
     @PostMapping("create")
-    public String createStudy(@Validated @ModelAttribute StudysDTO studysDto, MultipartFile file) throws IllegalStateException, IOException {
+    public String createStudy(@Validated @ModelAttribute StudyDTO studyDto, MultipartFile file) throws IllegalStateException, IOException {
         
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
         User loginUser = principalDetails.getUser();
 
-        Studys studys = new Studys();
+        Study study = new Study();
         
-        studys.setStudyName(studysDto.getStudyName());
-        studys.setCategory(studysDto.getCategory());
-        studys.setStudyDetail(studysDto.getStudyDetail());
-        studys.setStartDate(studysDto.getTsStartDate());
-        studys.setEndDate(studysDto.getTsEndDate());
-        studys.setWriterUserid(loginUser.getUserid());
+        study.setStudyName(studyDto.getStudyName());
+        study.setCategory(studyDto.getCategory());
+        study.setStudyDetail(studyDto.getStudyDetail());
+        study.setStartDate(studyDto.getTsStartDate());
+        study.setEndDate(studyDto.getTsEndDate());
+        study.setWriterUserid(loginUser.getUserid());
 
         System.out.println(file.getOriginalFilename());
         if (file.getOriginalFilename() != "") {
@@ -105,28 +105,28 @@ public class StudysController {
 
             file.transferTo(saveFile);
 
-            studys.setFilepath("/assets/img/study/" + fileName);
+            study.setFilepath("/assets/img/study/" + fileName);
         }
 
         //@TODO 실패시 처리 성공시 입력값반환. 
-        Studys result = studysService.createStudy(studys);
+        Study result = studyService.createStudy(study);
         System.out.println(result);
         
-        return "redirect:/study/studys";
+        return "redirect:/study";
     }
     
 
-    @GetMapping("detail")// studys/detail?id=
+    @GetMapping("detail")// study/detail?id=
     private String studydetail(Model model, @RequestParam("id") Long id) {
 
-        StudysDTO study = StudysDTO.toStudysDTO(studysService.findById(id));
+        StudyDTO study = StudyDTO.toStudyDTO(studyService.findById(id));
         study.setStudyDetail(util.nl2br(study.getStudyDetail()));
 
         System.out.println(study);
 
         model.addAttribute("study", study);
 
-        List<StudyApplication> applications = studyApplicationService.findByStudy(studysService.findById(id));
+        List<StudyApplication> applications = studyApplicationService.findByStudy(studyService.findById(id));
         int applicantCount = applications.size();
         
         model.addAttribute("applications", applications);
@@ -135,14 +135,14 @@ public class StudysController {
         return "study/studydetail";
     }
 
-    @PostMapping("apply")// studys/apply
+    @PostMapping("apply")// study/apply
     public String applyStudy(@RequestParam("id") Long studyId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
         User loginUser = principalDetails.getUser();
 
-        Studys study = new Studys();
-        study = studysService.findById(studyId);
+        Study study = new Study();
+        study = studyService.findById(studyId);
 
         StudyApplication studyApplication = new StudyApplication();
         studyApplication.setStudy(study);
@@ -150,7 +150,7 @@ public class StudysController {
 
         studyApplicationService.addStudyApplication(studyApplication);
         
-        return "redirect:/studys";
+        return "redirect:/study";
     }
     
 

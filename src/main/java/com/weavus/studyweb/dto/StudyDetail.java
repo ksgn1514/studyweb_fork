@@ -10,16 +10,16 @@ import com.weavus.studyweb.entity.StudyApplication;
 import lombok.Data;
 
 @Data
-public class StudysDetail {
-    // Studys 정보와 참가자 리스트, 참가자 수를 담는 DTO
+public class StudyDetail {
+    // Study 정보와 참가자 리스트, 참가자 수를 담는 DTO
 
-    private StudysDTO studys;
+    private StudyDTO study;
     private List<StudyApplication> applications;
     private int applicantCount;
 
     // startDate로부터 D-day 계산 메소드
     public String calculateDday() {
-        LocalDate start = LocalDate.parse(studys.getStartDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        LocalDate start = LocalDate.parse(study.getStartDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         LocalDate today = LocalDate.now();
         long daysBetween = ChronoUnit.DAYS.between(today, start);
 

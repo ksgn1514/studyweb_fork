@@ -27,7 +27,7 @@ public class StudyApplication {
 
     @ManyToOne
     @JoinColumn(name = "study_id")
-    private Studys study;
+    private Study study;
 
     @Column(name = "application_date")
     private Timestamp applicationDate;

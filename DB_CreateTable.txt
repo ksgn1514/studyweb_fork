@@ -10,7 +10,7 @@ CREATE TABLE `user` (
 	UNIQUE INDEX `userId` (`userId`) USING BTREE
 );
 
-CREATE TABLE `studys` (
+CREATE TABLE `study` (
 	`id` BIGINT(10) NOT NULL AUTO_INCREMENT,
 	`study_name` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_general_ci',
 	`category` VARCHAR(10) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',

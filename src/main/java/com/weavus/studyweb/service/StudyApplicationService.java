@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.weavus.studyweb.entity.StudyApplication;
-import com.weavus.studyweb.entity.Studys;
+import com.weavus.studyweb.entity.Study;
 import com.weavus.studyweb.repository.StudyApplicationRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class StudyApplicationService {
         return studyApplicationRepository.save(studyApplication);
     }
 
-    public List<StudyApplication> findByStudy(Studys study){
+    public List<StudyApplication> findByStudy(Study study){
         return studyApplicationRepository.findByStudy(study);
     }
 }

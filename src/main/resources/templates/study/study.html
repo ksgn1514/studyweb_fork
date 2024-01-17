@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html data-bs-theme="light" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{common :: meta_header('studys',~{::link},~{::script})}">
+<head th:replace="~{common :: meta_header('study',~{::link},~{::script})}">
 
 </head>
 
@@ -14,7 +14,7 @@
         <div
           class="col-md-10 col-lg-10 col-xl-8 text-center d-flex d-sm-flex d-md-flex justify-content-center align-items-center mx-auto justify-content-md-start align-items-md-center justify-content-xl-center">
           <div>
-            <p class="fw-bold text-success mb-2">Studys</p>
+            <p class="fw-bold text-success mb-2">Study</p>
             <h2 class="text-uppercase fw-bold mb-3">스터디</h2>
             <p class="mb-4">
               초급 강의형 스터디부터 실배포용 사이드 프로젝트까지! <br /> 여러가지 목표와 공부를 동료들과 함께해요!<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -35,45 +35,45 @@
               &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             </p>
             <button class="btn btn-primary btn-sm fs-5 py-2 px-4" style="margin-right: 5px;" type="button"
-              onclick="filterStudys('all')">전체</button>
+              onclick="filterStudy('all')">전체</button>
 
             <button class="btn btn-primary btn-sm fs-5 py-2 px-4" type="button"
-              onclick="filterStudys('recruiting')">모집중</button>
+              onclick="filterStudy('recruiting')">모집중</button>
           </div>
         </div>
       </div>
     </div>
   </section>
   <section>
-    <div class="container py-4 py-xl-5" th:fragment="studys-list" id="studysListContainer">
-      <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
-        <div th:each="studysdetail : ${studysList}" class="col">
+    <div class="container py-4 py-xl-5" th:fragment="study-list" id="studyListContainer">
+      <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3" th:frgment="study-list-for-index">
+        <div th:each="studydetail : ${studyList}" class="col">
           <div>
-            <th:block th:if="${studysdetail.studys.filepath == null}">
+            <th:block th:if="${studydetail.study.filepath == null}">
               <img class="rounded img-fluid d-block w-100 fit-cover" style="height: 200px; object-fit: contain;"
                 src="assets/svg/logo.svg" />
             </th:block>
-            <th:block th:if="${studysdetail.studys.filepath != null}">
+            <th:block th:if="${studydetail.study.filepath != null}">
               <img class="rounded img-fluid d-block w-100 fit-cover" style="height: 200px"
-                th:src="@{${studysdetail.studys.filepath}}" />
+                th:src="@{${studydetail.study.filepath}}" />
             </th:block>
 
             <div class="py-4">
               <div class="d-flex align-items-center">
                 <!-- 상태에 따른 뱃지 색상 변경 -->
-                <span class="badge" th:classappend="${studysdetail.studys.status == '모집중' ? 'bg-success' : 
-                                   (studysdetail.studys.status == '진행중' ? 'bg-light text-dark' : 
-                                   (studysdetail.studys.status == '완료' ? 'bg-secondary' : 'bg-primary'))}"
-                  th:text="${studysdetail.studys.status == '모집중' ? '모집중 '+studysdetail.calculateDday() : studysdetail.studys.status}">상태</span>
+                <span class="badge" th:classappend="${studydetail.study.status == '모집중' ? 'bg-success' : 
+                                   (studydetail.study.status == '진행중' ? 'bg-light text-dark' : 
+                                   (studydetail.study.status == '완료' ? 'bg-secondary' : 'bg-primary'))}"
+                  th:text="${studydetail.study.status == '모집중' ? '모집중 '+studydetail.calculateDday() : studydetail.study.status}">상태</span>
 
                 <!-- 신청자 수에 대한 뱃지 -->
-                <span class="badge bg-primary me-2" th:text="${studysdetail.applicantCount} + '명 참가'">신청자수</span>
+                <span class="badge bg-primary me-2" th:text="${studydetail.applicantCount} + '명 참가'">신청자수</span>
 
               </div>
-              <h4 th:text="${studysdetail.studys.studyName}">스터디 이름</h4>
+              <h4 th:text="${studydetail.study.studyName}">스터디 이름</h4>
               <p style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; height: 4.5em; line-height: 1.5em;"
-                th:utext="${studysdetail.studys.studyDetail}">상세설명</p>
-              <a class="btn btn-primary" role="button" th:href="@{/studys/detail(id=${studysdetail.studys.id})}">자세히</a>
+                th:utext="${studydetail.study.studyDetail}">상세설명</p>
+              <a class="btn btn-primary" role="button" th:href="@{/study/detail(id=${studydetail.study.id})}">자세히</a>
             </div>
           </div>
         </div>
@@ -83,7 +83,7 @@
     <div class="row">
       <div class="col">
         <section class="text-start py-4 py-xl-5">
-          <div class="container">
+          <div class="container" th:fragment="study-enroll-for-index">
             <div
               class="text-white bg-primary border rounded border-0 border-primary d-flex flex-column justify-content-between flex-lg-row p-4 p-md-5">
               <div class="pb-2 pb-lg-1">
@@ -91,7 +91,7 @@
                 <p class="mb-0">직접 스터디를 모집해보세요!</p>
               </div>
               <div class="my-2">
-                <a class="btn btn-light fs-5 py-2 px-4" role="button" href="/studys/enroll">스터디 등록하기</a>
+                <a class="btn btn-light fs-5 py-2 px-4" role="button" href="/study/enroll">스터디 등록하기</a>
               </div>
             </div>
           </div>
@@ -104,18 +104,18 @@
   <div th:replace="~{common :: footer}"></div>
 
   <script>
-    function filterStudys(status) {
+    function filterStudy(status) {
       // AJAX 요청을 통해 서버에 필터링 요청을 보냅니다.
       $.ajax({
-        url: '/studys/filter',
+        url: '/study/filter',
         type: 'GET',
         data: {
           status: status
         },
         success: function (response) {
           // 서버로부터 필터링된 결과를 받아서 페이지에 업데이트합니다.
-          // 예를 들어, studysList를 갱신하는 코드가 들어갈 수 있습니다.
-          $('#studysListContainer').html(response);
+          // 예를 들어, studyList를 갱신하는 코드가 들어갈 수 있습니다.
+          $('#studyListContainer').html(response);
         }
       });
     }

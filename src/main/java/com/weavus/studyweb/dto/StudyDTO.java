@@ -5,7 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.weavus.studyweb.entity.Studys;
+import com.weavus.studyweb.entity.Study;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,7 +18,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class StudysDTO {
+public class StudyDTO {
 
     private Long id;
     private String studyName;
@@ -66,25 +66,25 @@ public class StudysDTO {
         }
     }
 
-    public static StudysDTO toStudysDTO (Studys studys){
+    public static StudyDTO toStudyDTO (Study study){
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        StudysDTO studyDTO = new StudysDTO();
-        studyDTO.setId(studys.getId());
-        studyDTO.setStudyName(studys.getStudyName());
-        studyDTO.setCategory(studys.getCategory());
-        studyDTO.setWriterUserid(studys.getWriterUserid());
-        studyDTO.setFilepath(studys.getFilepath());
-        studyDTO.setStudyDetail(studys.getStudyDetail());
+        StudyDTO studyDTO = new StudyDTO();
+        studyDTO.setId(study.getId());
+        studyDTO.setStudyName(study.getStudyName());
+        studyDTO.setCategory(study.getCategory());
+        studyDTO.setWriterUserid(study.getWriterUserid());
+        studyDTO.setFilepath(study.getFilepath());
+        studyDTO.setStudyDetail(study.getStudyDetail());
         
-        String start = dateFormat.format(studys.getStartDate());
-        String end = dateFormat.format(studys.getEndDate());
+        String start = dateFormat.format(study.getStartDate());
+        String end = dateFormat.format(study.getEndDate());
 
         studyDTO.setStartDate(start);
         studyDTO.setEndDate(end);
 
         studyDTO.setStatus();
-        studyDTO.setCreateDate(dateFormat.format(studys.getCreateDate()));
+        studyDTO.setCreateDate(dateFormat.format(study.getCreateDate()));
 
         return studyDTO;
     }
