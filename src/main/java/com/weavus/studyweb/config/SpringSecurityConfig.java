@@ -33,6 +33,7 @@ public class SpringSecurityConfig {
                         formLogin.loginPage("/loginForm")
                                 .loginProcessingUrl("/login")
                                 .defaultSuccessUrl("/")
+                                .failureUrl("/login/fail")
                 )
                 .logout((logout) -> logout.logoutSuccessUrl("/"))
         ;

@@ -33,11 +33,4 @@ public class InitController {
         return "index";
     }
 
-    
-    @GetMapping("/loginForm")
-    private String login() {
-
-        return "user/login";
-    }
-
 }

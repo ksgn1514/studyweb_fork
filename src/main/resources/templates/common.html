@@ -51,12 +51,12 @@
         <!-- 로그인중인 유저가 있으면 프로필, 로그아웃 표시 -->
         <th:block th:if="${user != null}">
           <div style="margin-right: 4px" th:text="${user.username}"></div>
-          <a class="btn btn-light btn-sm shadow" role="button" href="logout">Logout</a>
+          <a class="btn btn-light btn-sm shadow" role="button" th:href="@{/logout}">Logout</a>
         </th:block>
         <!-- 로그인중인 유저가 없으면 로그인, 회원가입 버튼 표시 -->
         <th:block th:if="${user == null}">
-          <a class="btn btn-light btn-sm shadow" role="button" href="loginForm" style="margin-right: 4px">Login</a>
-          <a class="btn btn-primary shadow" role="button" href="join">Join</a>
+          <a class="btn btn-light btn-sm shadow" role="button" th:href="@{/loginForm}" style="margin-right: 4px">Login</a>
+          <a class="btn btn-primary shadow" role="button" th:href="@{/join}">Join</a>
         </th:block>
 
       </div>
