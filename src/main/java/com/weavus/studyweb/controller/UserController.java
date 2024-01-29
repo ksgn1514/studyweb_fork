@@ -55,7 +55,7 @@ public class UserController {
         System.out.println(result);
         if(result != null){
             
-        return "redirect:/loginForm";
+            return "redirect:/loginForm";
         } else {
             return "index";
         }
