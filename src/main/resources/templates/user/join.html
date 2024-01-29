@@ -32,12 +32,16 @@
                 <span th:text="${msg}"></span>
                 <div class="mb-3">
                   <input class="form-control" type="text" name="username" placeholder="Name" />
+                  <span class="error-message" th:if="${usernameError}" th:text="${usernameError}"></span>
                 </div>
                 <div class="mb-3">
                   <input class="form-control" type="text" name="userid" placeholder="ID" />
+                  <span class="error-message" th:if="${useridError}" th:text="${useridError}"></span>
                 </div>
                 <div class="mb-3">
                   <input class="form-control" type="password" name="password" placeholder="Password" />
+                  <span class="error-message" th:if="${passwordEmptyError}" th:text="${passwordEmptyError}"></span>
+                  <span class="error-message" th:if="${passwordPatternError}" th:text="${passwordPatternError}"></span>
                 </div>
                 <div class="mb-3">
                   <button class="btn btn-primary d-block w-100" type="submit">

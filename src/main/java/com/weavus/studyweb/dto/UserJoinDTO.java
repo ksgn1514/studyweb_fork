@@ -10,12 +10,12 @@ import lombok.RequiredArgsConstructor;
 public class UserJoinDTO {
     
     @NotBlank(message = "아이디를 입력해주세요.")
-    private String userid;
+    private final String userid;
 
     @NotBlank(message = "비밀번호를 입력해주세요.")
     @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[0-9]).{8,20}$", message = "비밀번호는 영문, 숫자를 포함한 8~20자리로 입력해주세요.")
-    private String password;
+    private final String password;
 
     @NotBlank(message = "이름을 입력해주세요.")
-    private String username;
+    private final String username;
 }
