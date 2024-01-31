@@ -4,10 +4,16 @@ import com.weavus.studyweb.dto.UserJoinDTO;
 import com.weavus.studyweb.entity.User;
 import com.weavus.studyweb.repository.UserRepository;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,17 +30,22 @@ public class UserController {
     private final UserRepository userRepository;
 
     @GetMapping("/loginForm")
-    private String login() {
-
-        return "user/login";
+    private String login(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession(false);
+    if (session != null) {
+        AuthenticationException ex = (AuthenticationException) session
+                .getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+        if (ex != null) {
+            if (ex instanceof BadCredentialsException) {
+                model.addAttribute("msg", "아이디나 비밀번호가 일치하지 않습니다.");
+            } else if (ex instanceof UsernameNotFoundException) {
+                model.addAttribute("msg", "해당 사용자를 찾을 수 없습니다.");
+            } else {
+                model.addAttribute("msg", "로그인에 실패했습니다.");
+            }
+        }
     }
-
-    @GetMapping("/login/fail")
-    private String loginFail(Model model) {
-
-        model.addAttribute("msg", "로그인에 실패했습니다.\r\n 아이디와 패스워드를 확인해주세요.");
-
-        return "user/login";
+    return "user/login";
     }
 
     // 회원가입
@@ -51,7 +62,7 @@ public class UserController {
             for (FieldError error : bindingResult.getFieldErrors()) {
                 String field = error.getField();
                 String message = error.getDefaultMessage();
-                
+
                 if (field.equals("userid")) {
                     redirectAttrs.addFlashAttribute("useridError", message);
                 } else if (field.equals("username")) {
